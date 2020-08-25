@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   submitForm(): void {
     for (const i in this.loginForm.controls) {
-      if (i != null) {
+      if (i !== null) {
         this.loginForm.controls[i].markAsDirty();
         this.loginForm.controls[i].updateValueAndValidity();
       }
