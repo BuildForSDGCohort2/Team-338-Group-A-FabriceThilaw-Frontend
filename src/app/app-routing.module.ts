@@ -1,29 +1,29 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes, PreloadAllModules} from '@angular/router';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes, PreloadAllModules} from "@angular/router";
 
-import {FullLayoutComponent} from './layouts/full-layout/full-layout.component';
-import {CommonLayoutComponent} from './layouts/common-layout/common-layout.component';
+import {FullLayoutComponent} from "./layouts/full-layout/full-layout.component";
+import {CommonLayoutComponent} from "./layouts/common-layout/common-layout.component";
 
-import {FullLayout_ROUTES} from './shared/routes/full-layout.routes';
-import {CommonLayout_ROUTES} from './shared/routes/common-layout.routes';
-import {LoginComponent} from './authentication/login/login.component';
+import {FullLayout_ROUTES} from "./shared/routes/full-layout.routes";
+import {CommonLayout_ROUTES} from "./shared/routes/common-layout.routes";
+import {LoginComponent} from "./authentication/login/login.component";
 
 const appRoutes: Routes = [
 
   {
-    path: '',
+    path: "",
     component: LoginComponent,
     data: {
-      title: 'Login'
+      title: "Login"
     }
   },
   {
-    path: '',
+    path: "",
     component: CommonLayoutComponent,
     children: CommonLayout_ROUTES
   },
   {
-    path: '',
+    path: "",
     component: FullLayoutComponent,
     children: FullLayout_ROUTES
   }
@@ -34,7 +34,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes, {
       preloadingStrategy: PreloadAllModules,
       useHash: true,
-      scrollPositionRestoration: 'enabled'
+      scrollPositionRestoration: "enabled"
     })
   ],
   exports: [

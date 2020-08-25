@@ -1,15 +1,14 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {NgModule} from "@angular/core";
+import {Routes, RouterModule} from "@angular/router";
 
-import {DefaultDashboardComponent} from './default/default-dashboard.component';
-import {WithBreadcrumbDashboardComponent} from './with-breadcrumb/with-breadcrumb-dashboard.component';
-import {AuthGuard} from '../shared/guard/auth.guard';
-import {UserResolver} from '../shared/resolvers/user.resolver';
+import {DefaultDashboardComponent} from "./default/default-dashboard.component";
+import {AuthGuard} from "../shared/guard/auth.guard";
+import {UserResolver} from "../shared/resolvers/user.resolver";
 
 const routes: Routes = [
 
   {
-    path: 'dashboard',
+    path: "dashboard",
     component: DefaultDashboardComponent,
     resolve: {data: UserResolver},
     canActivate: [AuthGuard]

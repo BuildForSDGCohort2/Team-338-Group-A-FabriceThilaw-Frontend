@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import * as firebase from 'firebase';
-import {auth, User} from 'firebase';
-import {GreenupUser} from '../interfaces/user.type';
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import * as firebase from "firebase";
+import {GreenupUser} from "../interfaces/user.type";
 
-const USER_AUTH_API_URL = '/api-url';
+const USER_AUTH_API_URL = "/api-url";
 
 @Injectable()
 export class AuthenticationService {
@@ -14,7 +13,7 @@ export class AuthenticationService {
   public currentUser: Observable<GreenupUser>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<GreenupUser>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<GreenupUser>(JSON.parse(localStorage.getItem("currentUser")));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -26,7 +25,7 @@ export class AuthenticationService {
     return this.http.post<any>(USER_AUTH_API_URL, {username, password})
       .pipe(map(user => {
         if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem("currentUser", JSON.stringify(user));
           this.currentUserSubject.next(user);
         }
         return user;
@@ -43,7 +42,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem("currentUser");
     this.currentUserSubject.next(null);
   }
 }

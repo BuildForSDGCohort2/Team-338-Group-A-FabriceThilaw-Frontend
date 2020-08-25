@@ -1,8 +1,8 @@
-import { Component } from '@angular/core'
+import { Component } from "@angular/core";
 
 @Component({
-    templateUrl: './default-dashboard.component.html'
+    templateUrl: "./default-dashboard.component.html"
 })
 
 export class DefaultDashboardComponent {
-}  
+}

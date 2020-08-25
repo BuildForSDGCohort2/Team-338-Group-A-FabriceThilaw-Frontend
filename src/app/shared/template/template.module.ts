@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { SharedModule } from '../shared.module';
+import { SharedModule } from "../shared.module";
 
 import { HeaderComponent } from "./header/header.component";
 import { SearchComponent } from "./search/search.component";
-import { QuickViewComponent } from './quick-view/quick-view.component';
+import { QuickViewComponent } from "./quick-view/quick-view.component";
 import { SideNavComponent } from "./side-nav/side-nav.component";
 import { FooterComponent } from "./footer/footer.component";
 
 import { SideNavDirective } from "../directives/side-nav.directive";
-import { ThemeConstantService } from '../services/theme-constant.service';
+import { ThemeConstantService } from "../services/theme-constant.service";
 
 @NgModule({
     exports: [
@@ -33,7 +33,7 @@ import { ThemeConstantService } from '../services/theme-constant.service';
         SideNavDirective,
         FooterComponent
     ],
-    providers: [ 
+    providers: [
         ThemeConstantService
     ]
 })
