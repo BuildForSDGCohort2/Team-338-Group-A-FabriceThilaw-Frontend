@@ -27,17 +27,17 @@
       <div class="container h-100">
         <div class="row no-gutters h-100 align-items-center">
           <div class="col-md-8 col-lg-7 col-xl-6 mx-auto">
-            <h2>Sign In</h2>
+            <h2>Sign In to GreenUp</h2>
             <p class="m-b-30">Enter your credential to get access</p>
             <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
               <nz-form-item>
-                <nz-form-label nzRequired nzFor="userName">Username</nz-form-label>
+                <nz-form-label nzFor="userEmail" nzRequired>Username</nz-form-label>
                 <nz-form-control>
                   <nz-input-group [nzPrefix]="prefixUser">
-                    <input type="text" nz-input formControlName="userName" placeholder="Username">
+                    <input formControlName="userEmail" nz-input placeholder="Username" type="text">
                   </nz-input-group>
-                  <nz-form-explain *ngIf="loginForm.get('userName').dirty && loginForm.get('userName').errors">Please
-                    input your username!
+                  <nz-form-explain *ngIf="loginForm.get('userEmail').dirty && loginForm.get('userEmail').errors">Please
+                    input your email!
                   </nz-form-explain>
                 </nz-form-control>
               </nz-form-item>

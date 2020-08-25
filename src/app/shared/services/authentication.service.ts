@@ -9,8 +9,8 @@ const USER_AUTH_API_URL = "/api-url";
 
 @Injectable()
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<GreenupUser>;
   public currentUser: Observable<GreenupUser>;
+  private currentUserSubject: BehaviorSubject<GreenupUser>;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<GreenupUser>(JSON.parse(localStorage.getItem("currentUser")));
@@ -32,16 +32,18 @@ export class AuthenticationService {
       }));
   }
 
-  loginWithEmailAndPasswordThroughFirebase(email: string, password: string): Promise<any> {
+  public loginWithEmailAndPassword(email: string, password: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then(res => {
           resolve(res);
-        }, err => reject(err));
+        }, err => {
+          reject(err);
+        });
     });
   }
 
-  logout() {
+  public logout() {
     localStorage.removeItem("currentUser");
     this.currentUserSubject.next(null);
   }
