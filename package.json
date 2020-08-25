@@ -1,6 +1,7 @@
 {
-  "name": "enlink",
-  "version": "2.0.2",
+  "name": "greenup",
+  "version": "0.0.1",
+  "author" : "Fabrice Thilaw KIKI (fabricethilaw@gmail.com)",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4200 -o",
@@ -29,6 +30,7 @@
     "chart.js": "^2.7.3",
     "chartist": "^0.11.0",
     "core-js": "^2.5.7",
+    "firebase": "^7.19.0",
     "jquery": "^3.3.1",
     "ng-chartist": "^1.1.1",
     "ng-chartjs": "0.0.7",
