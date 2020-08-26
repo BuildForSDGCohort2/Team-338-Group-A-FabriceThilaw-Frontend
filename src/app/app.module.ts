@@ -18,8 +18,8 @@ import {ThemeConstantService} from "./shared/services/theme-constant.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AuthenticationModule} from "./authentication/authentication.module";
 import {DashboardModule} from "./dashboard/dashboard.module";
-import {environment} from "../environments/environment";
 import * as firebase from "firebase";
+import {environment} from "../environments/environment.prod";
 
 registerLocaleData(en);
 firebase.initializeApp(environment.firebase);
