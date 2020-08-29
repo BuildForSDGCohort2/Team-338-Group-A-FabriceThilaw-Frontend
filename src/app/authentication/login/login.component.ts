@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
     // send client request to firebase server
     const promise: Promise<any> = this.authService.loginWithEmailAndPassword(email, password);
     this.startLoadingAnimation();
-
     // handle server response
     this.handleEmailSignInResult(promise);
   }
@@ -61,6 +60,7 @@ export class LoginComponent implements OnInit {
       if (credentials) {
         const firebaseUser = credentials.user;
         this.appService.consoleLog("connected user", firebaseUser);
+
         // redirect user to dashboard
         this.router.navigate(["dashboard"])
           .then(_ => {
