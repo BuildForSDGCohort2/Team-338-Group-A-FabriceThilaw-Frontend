@@ -62,7 +62,7 @@ export class CommonLayoutComponent implements OnInit {
         path += route.routeConfig.path;
       }
     } else {
-      label = "Dashboard";
+      label = "ohodfhv";
       path += "dashboard";
     }
 

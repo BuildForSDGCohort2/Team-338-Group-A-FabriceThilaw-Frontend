@@ -1,5 +1,7 @@
 import {Address} from "./address.type";
 
+export const AppUser_ROLES: string[] = ["GREENUP_ADMIN", "OPERATION_MANAGER", "AGRICULTURAL_ADVISOR", "FARMER"];
+
 export interface AppUser {
   address: Address;
   createdBy: string;

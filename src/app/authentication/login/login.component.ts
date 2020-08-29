@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {AppService} from "../../shared/services/app.service";
 import {NzMessageService} from "ng-zorro-antd";
@@ -18,7 +17,7 @@ export class LoginComponent implements OnInit {
   constructor(private appService: AppService,
               private authService: AuthenticationService,
               private  messageService: NzMessageService,
-              private formBuilder: FormBuilder, public router: Router) {
+              private formBuilder: FormBuilder) {
   }
 
   /**
@@ -40,6 +39,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    // redirect to dashboard if user is authenticated
+    if (this.authService.isAuthenticated) {
+      const extra = {title: "Overview"};
+      this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, extra);
+    }
   }
 
   initForm() {
@@ -60,13 +64,9 @@ export class LoginComponent implements OnInit {
       if (credentials) {
         const firebaseUser = credentials.user;
         this.appService.consoleLog("connected user", firebaseUser);
-
-        // redirect user to dashboard
-        this.router.navigate(["dashboard"])
-          .then(_ => {
-          });
+        this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, {title: "Overview"});
       } else {
-        this.appService.consoleLog("connected user", "Unable to resolve");
+        this.appService.consoleLog("User not connected", "Unable to resolve");
       }
     }, error => {
       this.stopLoadingAnimation();
@@ -87,6 +87,7 @@ export class LoginComponent implements OnInit {
       this.appService.consoleLog("Login failed, code", errorCode);
     });
   }
+
 
   /**
    * Animates sign-in button

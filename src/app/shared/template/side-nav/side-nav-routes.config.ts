@@ -2,37 +2,43 @@ import {SideNavInterface} from "../../interfaces/side-nav.type";
 
 export const ROUTES: SideNavInterface[] = [
   {
-    path: "",
-    title: "Dashboard",
+    path: "overview",
+    title: "Overview",
     iconType: "nzIcon",
     iconTheme: "outline",
     icon: "dashboard",
     submenu: []
   },
   {
-    path: "",
-    title: "Multi Level Menu",
+    path: "advisors",
+    title: "Plot Supervisors",
     iconType: "nzIcon",
     iconTheme: "outline",
     icon: "appstore",
-    submenu: [
-      {
-        path: "",
-        title: "Level 1",
-        iconType: "",
-        icon: "",
-        iconTheme: "",
-        submenu: [
-          {
-            path: "",
-            title: "Level 2",
-            iconType: "nzIcon",
-            iconTheme: "outline",
-            icon: "layout",
-            submenu: []
-          }
-        ]
-      }
-    ]
+    submenu: []
+  },
+  {
+    path: "farmers",
+    title: "Farmers",
+    iconType: "nzIcon",
+    iconTheme: "outline",
+    icon: "appstore",
+    submenu: []
+  },
+  {
+    path: "inputs",
+    title: "Agricultural Inputs",
+    iconType: "nzIcon",
+    iconTheme: "outline",
+    icon: "appstore",
+    submenu: []
+  },
+  {
+    path: "statistics",
+    title: "Cost Statistics",
+    iconType: "nzIcon",
+    iconTheme: "outline",
+    icon: "appstore",
+    submenu: []
   }
 ];
