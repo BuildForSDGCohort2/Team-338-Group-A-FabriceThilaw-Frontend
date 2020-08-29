@@ -13,6 +13,7 @@ export interface AppUser {
   modifiedOn: string;
   personalEmail: string;
   photoUrl: string;
+  token: string;
   /**
    * Can be one of the following: GREENUP_ADMIN, OPERATION_MANAGER, AGRICULTURAL_ADVISOR, FARMER
    */
