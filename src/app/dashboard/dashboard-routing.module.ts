@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {Routes, RouterModule} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
 
 import {DefaultDashboardComponent} from "./default/default-dashboard.component";
 import {AuthGuard} from "../shared/guard/auth.guard";
@@ -8,9 +8,14 @@ import {UserResolver} from "../shared/resolvers/user.resolver";
 const routes: Routes = [
 
   {
-    path: "dashboard",
+    path: "overview",
     component: DefaultDashboardComponent,
     resolve: {data: UserResolver},
+    data: { // for breadcrumbs
+      title: "",
+      path: "Overview",
+      headerDisplay: "none"
+    },
     canActivate: [AuthGuard]
   },
   /*{
