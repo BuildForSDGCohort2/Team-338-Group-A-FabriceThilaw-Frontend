@@ -4,32 +4,39 @@ import {BehaviorSubject, Observable} from "rxjs";
 import * as firebase from "firebase";
 import {AppUser} from "../interfaces/user.type";
 import {AngularFireAuth} from "@angular/fire/auth";
+import {ApiService} from "./api.service";
+import {switchMap} from "rxjs/operators";
+import {LogcatService} from "./logcat.service";
 
 const USER_AUTH_API_URL = "/api-url";
 
 @Injectable()
 export class AuthenticationService {
-  public currentUser: Observable<AppUser>;
   private currentUserSubject: BehaviorSubject<AppUser>;
 
   private authState: firebase.User;
 
-  constructor(private http: HttpClient, private firebaseAuth: AngularFireAuth) {
-    this.firebaseAuth.authState.subscribe(authState => {
-      this.authState = authState;
+  constructor(private http: HttpClient, private api: ApiService,
+              private firebaseAuth: AngularFireAuth,
+              private logcat: LogcatService
+  ) {
+    // initialize user value  provider
+    this.currentUserSubject = new BehaviorSubject(null);
+    // Make a request to get the current & valid user
+    const currentUserObservable = this.observeAuthenticatedCurrentUser();
+    currentUserObservable.subscribe(result => {
+      this.currentUserSubject.next(result);
     });
-
-    this.currentUserSubject = new BehaviorSubject<AppUser>(JSON.parse(localStorage.getItem("currentUser")));
-    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): AppUser {
     return this.currentUserSubject.value;
   }
 
-  get isAuthenticated(): boolean {
+
+  /*get isAuthenticated(): boolean {
     return this.authState !== null;
-  }
+  }*/
 
   public loginWithEmailAndPassword(email: string, password: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
@@ -45,5 +52,21 @@ export class AuthenticationService {
   public logout() {
     localStorage.removeItem("currentUser");
     this.currentUserSubject.next(null);
+  }
+
+  /**
+   * Make a request to get the currently authenticated user,
+   * that also has a title (a.k.a role) on the platform
+   * @private
+   */
+  private observeAuthenticatedCurrentUser(): Observable<any> {
+    return this.firebaseAuth.authState
+      .pipe(switchMap(authCredential => {
+        //
+        this.authState = authCredential;
+        if (authCredential !== null) {
+          return this.api.getCurrentUser(authCredential);
+        }
+      }));
   }
 }

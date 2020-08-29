@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
+import {LogcatService} from "./logcat.service";
 
 @Injectable({
   providedIn: "root"
@@ -7,7 +8,7 @@ import {Router} from "@angular/router";
 export class AppService {
   static ROUTE_TO_DASHBOARD = "piloting-module/overview";
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private logcat: LogcatService) {
   }
 
   /**
@@ -21,15 +22,5 @@ export class AppService {
       });
   }
 
-  /**
-   * A simple function that helps to print easily readable output to console
-   * @param title
-   * @param body
-   */
-  public consoleLog(title: string, body: string) {
-    console.log(title + ":");
-    console.log(body);
-
-  }
 
 }

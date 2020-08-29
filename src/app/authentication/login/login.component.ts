@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {AppService} from "../../shared/services/app.service";
 import {NzMessageService} from "ng-zorro-antd";
+import {LogcatService} from "../../shared/services/logcat.service";
 
 @Component({
   selector: "app-login",
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   public isButtonLoading = false;
 
   constructor(private appService: AppService,
+              private logcat: LogcatService,
               private authService: AuthenticationService,
               private  messageService: NzMessageService,
               private formBuilder: FormBuilder) {
@@ -40,7 +42,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     // redirect to dashboard if user is authenticated
-    if (this.authService.isAuthenticated) {
+    if (this.authService.currentUserValue != null) {
       const extra = {title: "Overview"};
       this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, extra);
     }
@@ -63,10 +65,10 @@ export class LoginComponent implements OnInit {
       this.stopLoadingAnimation();
       if (credentials) {
         const firebaseUser = credentials.user;
-        this.appService.consoleLog("connected user", firebaseUser);
+        this.logcat.consoleLog("connected user", firebaseUser);
         this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, {title: "Overview"});
       } else {
-        this.appService.consoleLog("User not connected", "Unable to resolve");
+        this.logcat.consoleLog("User not connected", "Unable to resolve");
       }
     }, error => {
       this.stopLoadingAnimation();
@@ -83,8 +85,8 @@ export class LoginComponent implements OnInit {
         this.messageService.error("Something went wrong. Please try again.");
       }
       this.isButtonLoading = false;
-      this.appService.consoleLog("Login failed", errorMessage);
-      this.appService.consoleLog("Login failed, code", errorCode);
+      this.logcat.consoleLog("Login failed", errorMessage);
+      this.logcat.consoleLog("Login failed, code", errorCode);
     });
   }
 
