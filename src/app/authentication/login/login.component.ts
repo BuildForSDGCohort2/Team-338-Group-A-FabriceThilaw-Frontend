@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
         this.authService.requestForAValidUser();
         const user$ = this.authService.currentUserValue;
         user$.subscribe(user => {
-          if (user != null) {
+          if (user !== null) {
             this.logcat.consoleLog("connected user after manual login", JSON.stringify(user));
             AppService.navigateTo(AppService.ROUTE_TO_DASHBOARD, this.authService.router, {title: "Overview"});
           } else {
