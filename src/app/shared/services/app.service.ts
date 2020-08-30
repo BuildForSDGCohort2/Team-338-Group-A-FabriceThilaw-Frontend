@@ -6,30 +6,22 @@ import {Router} from "@angular/router";
 })
 export class AppService {
   static ROUTE_TO_DASHBOARD = "piloting-module/overview";
+  static ROUTE_TO_LOGIN = "login";
 
   constructor(public router: Router) {
   }
 
   /**
-   * Helps for navigation routing
+   * Helps for navigation routing through out the modules.
+   * It makes it easy to lookup to where navigation functon has been used in code.
    * @param route navigation target
    */
-  navigateTo(route: string, breadCrumbData: any) {
+  static navigateTo(route: string, router: Router, breadCrumbData: any) {
     // redirect user to dashboard
-    this.router.navigate([route], breadCrumbData)
+    router.navigate([route], breadCrumbData)
       .then(_ => {
       });
   }
 
-  /**
-   * A simple function that helps to print easily readable output to console
-   * @param title
-   * @param body
-   */
-  public consoleLog(title: string, body: string) {
-    console.log(title + ":");
-    console.log(body);
-
-  }
 
 }

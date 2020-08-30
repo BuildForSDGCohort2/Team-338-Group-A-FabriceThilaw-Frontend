@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "greenup-dd813": {
+      "hosting": {
+        "enlink": [
+          "greenup-dd813"
+        ]
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {AppService} from "../../shared/services/app.service";
 import {NzMessageService} from "ng-zorro-antd";
+import {LogcatService} from "../../shared/services/logcat.service";
 
 @Component({
   selector: "app-login",
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   public isButtonLoading = false;
 
   constructor(private appService: AppService,
+              private logcat: LogcatService,
               private authService: AuthenticationService,
               private  messageService: NzMessageService,
               private formBuilder: FormBuilder) {
@@ -34,16 +36,12 @@ export class LoginComponent implements OnInit {
     const promise: Promise<any> = this.authService.loginWithEmailAndPassword(email, password);
     this.startLoadingAnimation();
     // handle server response
+
     this.handleEmailSignInResult(promise);
   }
 
   ngOnInit(): void {
     this.initForm();
-    // redirect to dashboard if user is authenticated
-    if (this.authService.isAuthenticated) {
-      const extra = {title: "Overview"};
-      this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, extra);
-    }
   }
 
   initForm() {
@@ -51,22 +49,31 @@ export class LoginComponent implements OnInit {
       userEmail: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
+
   }
 
   /**
-   * Processes a response from the firebase server to a sign-in request
+   * Processes a response for a sign-in request
    * @param promise
    * @private
    */
   private handleEmailSignInResult(promise: Promise<any>) {
     promise.then(credentials => {
-      this.stopLoadingAnimation();
       if (credentials) {
-        const firebaseUser = credentials.user;
-        this.appService.consoleLog("connected user", firebaseUser);
-        this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, {title: "Overview"});
+        this.isButtonLoading = false;
+        this.authService.requestForAValidUser();
+        const user$ = this.authService.currentUserValue;
+        user$.subscribe(user => {
+          if (user !== null) {
+            this.logcat.consoleLog("connected user after manual login", JSON.stringify(user));
+            AppService.navigateTo(AppService.ROUTE_TO_DASHBOARD, this.authService.router, {title: "Overview"});
+          } else {
+            this.messageService.error("Access denied.");
+          }
+        });
+
       } else {
-        this.appService.consoleLog("User not connected", "Unable to resolve");
+        this.logcat.consoleLog("User not connected", "Unable to resolve");
       }
     }, error => {
       this.stopLoadingAnimation();
@@ -83,11 +90,10 @@ export class LoginComponent implements OnInit {
         this.messageService.error("Something went wrong. Please try again.");
       }
       this.isButtonLoading = false;
-      this.appService.consoleLog("Login failed", errorMessage);
-      this.appService.consoleLog("Login failed, code", errorCode);
+      this.logcat.consoleLog("Login failed", errorMessage);
+      this.logcat.consoleLog("Login failed, code", errorCode);
     });
   }
-
 
   /**
    * Animates sign-in button
