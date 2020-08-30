@@ -36,16 +36,12 @@ export class LoginComponent implements OnInit {
     const promise: Promise<any> = this.authService.loginWithEmailAndPassword(email, password);
     this.startLoadingAnimation();
     // handle server response
+
     this.handleEmailSignInResult(promise);
   }
 
   ngOnInit(): void {
     this.initForm();
-    // redirect to dashboard if user is authenticated
-    if (this.authService.currentUserValue != null) {
-      const extra = {title: "Overview"};
-      this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, extra);
-    }
   }
 
   initForm() {
@@ -53,20 +49,29 @@ export class LoginComponent implements OnInit {
       userEmail: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
+
   }
 
   /**
-   * Processes a response from the firebase server to a sign-in request
+   * Processes a response for a sign-in request
    * @param promise
    * @private
    */
   private handleEmailSignInResult(promise: Promise<any>) {
     promise.then(credentials => {
-      this.stopLoadingAnimation();
       if (credentials) {
-        const firebaseUser = credentials.user;
-        this.logcat.consoleLog("connected user", firebaseUser);
-        this.appService.navigateTo(AppService.ROUTE_TO_DASHBOARD, {title: "Overview"});
+        this.isButtonLoading = false;
+        this.authService.requestForAValidUser();
+        const user$ = this.authService.currentUserValue;
+        user$.subscribe(user => {
+          if (user != null) {
+            this.logcat.consoleLog("connected user after manual login", JSON.stringify(user));
+            AppService.navigateTo(AppService.ROUTE_TO_DASHBOARD, this.authService.router, {title: "Overview"});
+          } else {
+            this.messageService.error("Access denied.");
+          }
+        });
+
       } else {
         this.logcat.consoleLog("User not connected", "Unable to resolve");
       }
@@ -89,7 +94,6 @@ export class LoginComponent implements OnInit {
       this.logcat.consoleLog("Login failed, code", errorCode);
     });
   }
-
 
   /**
    * Animates sign-in button
