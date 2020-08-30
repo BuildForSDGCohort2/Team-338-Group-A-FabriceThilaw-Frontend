@@ -14,10 +14,10 @@ export class ApiService {
 
   public static readonly FARMERS = "farmers";
   public static readonly USERS = "users";
-  public static readonly FARMING_ADVISORS = "agricultural_advisors";
+  public static readonly FARMING_ADVISORS = "farming_advisors";
   public static readonly FARMS = "farms";
   public static readonly FARM_INPUTS = "farm_inputs";
-  public static readonly CULTURES = "cultures";
+  public static readonly CULTURES = "crops";
   public static readonly INPUT_SUPPLIERS = "input_suppliers";
   auth: any;
 
