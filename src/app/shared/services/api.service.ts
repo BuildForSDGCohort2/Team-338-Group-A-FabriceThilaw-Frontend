@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import * as firebase from "firebase";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {AppUser} from "../interfaces/user.type";
+import {AppUser, Farmer, FarmingAdvisor} from "../interfaces/user.type";
 import {Observable} from "rxjs";
 import {LogcatService} from "./logcat.service";
 
@@ -14,7 +14,7 @@ export class ApiService {
 
   public static readonly FARMERS = "farmers";
   public static readonly USERS = "users";
-  public static readonly FARM_MONITORS = "agricultural_advisors";
+  public static readonly FARMING_ADVISORS = "agricultural_advisors";
   public static readonly FARMS = "farms";
   public static readonly FARM_INPUTS = "farm_inputs";
   public static readonly CULTURES = "cultures";
@@ -34,4 +34,38 @@ export class ApiService {
     this.logcat.consoleLog("path to get current user", path);
     return this.db.doc<AppUser>(path).valueChanges();
   }
+
+  /**
+   * Returns a list of farming advisors for a given manager
+   * @param managerId
+   */
+  public getFarmingAdvisors(managerId: string): Observable<FarmingAdvisor[]> {
+    const path = ApiService.FARMING_ADVISORS;
+    return this.db.collection<FarmingAdvisor>(path, ref => {
+      return ref.where("managerId", "==", managerId);
+    }).valueChanges();
+  }
+
+  /**
+   * Returns a list of farmers for a given advisor
+   * @param advisorId
+   */
+  public getFarmersCoachedBy(advisorId: string): Observable<Farmer[]> {
+    const path = ApiService.FARMERS;
+    return this.db.collection<Farmer>(path, ref => {
+      return ref.where("advisorId", "==", advisorId);
+    }).valueChanges();
+  }
+
+  /**
+   * Returns a list of farmers for a given operation manager
+   * @param advisorsId
+   */
+  public getFarmersCoachedByManagerTeam(advisorsId: string[]): Observable<Farmer[]> {
+    const path = ApiService.FARMERS;
+    return this.db.collection<Farmer>(path, ref => {
+      return ref.where("advisorId", "in", advisorsId);
+    }).valueChanges();
+  }
+
 }

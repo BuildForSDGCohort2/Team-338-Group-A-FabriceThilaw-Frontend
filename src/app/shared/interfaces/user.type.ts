@@ -23,9 +23,20 @@ export interface AppUser {
 }
 
 // todo set relevant properties to this OperationManager entity
-// export interface OperationManager {}
+export interface OperationManager {
+  id: string;
+  isDisabled: boolean;
+  userId: string;
+  userFullName: string;
+  organizationCode: string;
+  /**
+   * A map of < farming advisor id, advisor's fullname >
+   */
+  advisorTeam: Map<string, string>;
 
-export interface AgriculturalAdvisor {
+}
+
+export interface FarmingAdvisor {
   /**
    * A map of <Crop name, Supervised area per crop>
    */
@@ -38,6 +49,7 @@ export interface AgriculturalAdvisor {
   id: string;
   isDisabled: boolean;
   userId: string;
+  managerId: string;
   userFullName: string;
 
 }
@@ -48,15 +60,13 @@ export interface Farmer {
    */
   addressLine: string;
 
+  advisorId: string;
+
+
   /**
    * A map of <Crop name, Cultivated area>
    */
   areaPerCrop: Map<string, string>;
-
-  /**
-   * A map of <Coached farmer id, farmer's area supervised>
-   */
-  farmers: Map<string, string>;
 
   id: string;
   isDisabled: boolean;
