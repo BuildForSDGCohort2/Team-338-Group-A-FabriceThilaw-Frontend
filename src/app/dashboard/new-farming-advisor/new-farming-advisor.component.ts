@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AppUser, AppUser_ROLES, FarmingAdvisor} from "../../shared/interfaces/user.type";
+import {AppUser, AppUserRoles, FarmingAdvisor} from "../../shared/interfaces/user.type";
 import {AppService} from "../../shared/services/app.service";
 import {ApiService} from "../../shared/services/api.service";
 import {LogcatService} from "../../shared/services/logcat.service";
@@ -80,7 +80,7 @@ export class NewFarmingAdvisorComponent implements OnInit {
     }
     const formData: any = this.formGroup.value;
     this.logcat.consoleLog("Form data", JSON.stringify(formData));
-    if (this.apiService.currentUserValue.title === AppUser_ROLES.OPERATION_MANAGER) {
+    if (this.apiService.currentUserValue.title === AppUserRoles.OPERATION_MANAGER) {
       this.collectNewAdvisorData(formData);
     } else {
       this.messageService.error("You don't have the right to make this operation.");
@@ -110,7 +110,7 @@ export class NewFarmingAdvisorComponent implements OnInit {
       modifiedOn: AppService.time,
       personalEmail: formData.personalEmail,
       photoUrl: "",
-      title: AppUser_ROLES.AGRICULTURAL_ADVISOR
+      title: AppUserRoles.AGRICULTURAL_ADVISOR
     };
   }
 
@@ -127,7 +127,7 @@ export class NewFarmingAdvisorComponent implements OnInit {
     let managerId: string = null;
 
     // Check if the currently connected user has the rights to make farming advisors
-    if (this.apiService.currentUserValue.title === AppUser_ROLES.OPERATION_MANAGER
+    if (this.apiService.currentUserValue.title === AppUserRoles.OPERATION_MANAGER
     ) {
       managerId = this.apiService.currentUserValue.id;
     } else {
@@ -136,7 +136,7 @@ export class NewFarmingAdvisorComponent implements OnInit {
     }
     // create object if current creator has the rights for this
     // otherwise return null
-    if (userWithAdvisorTitle.title === AppUser_ROLES.AGRICULTURAL_ADVISOR) {
+    if (userWithAdvisorTitle.title === AppUserRoles.AGRICULTURAL_ADVISOR) {
 
       return {
         areaPerCoachedFarmer: null, supervisedAreaPerCrop: null,

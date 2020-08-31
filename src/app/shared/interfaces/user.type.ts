@@ -3,7 +3,7 @@ import * as firebase from "firebase";
 import Timestamp = firebase.firestore.Timestamp;
 
 
-export enum AppUser_ROLES {
+export enum AppUserRoles {
   GREENUP_ADMIN = "GREENUP_ADMIN",
   OPERATION_MANAGER = "OPERATION_MANAGER",
   AGRICULTURAL_ADVISOR = "AGRICULTURAL_ADVISOR",
