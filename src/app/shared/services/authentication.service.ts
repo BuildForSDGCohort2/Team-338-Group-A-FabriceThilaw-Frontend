@@ -8,6 +8,7 @@ import {ApiService} from "./api.service";
 import {switchMap} from "rxjs/operators";
 import {LogcatService} from "./logcat.service";
 import {Router} from "@angular/router";
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
 export class AuthenticationService implements OnInit {
@@ -26,6 +27,19 @@ export class AuthenticationService implements OnInit {
 
   public get currentUser$(): Observable<any> {
     return this.observeAuthenticatedCurrentUser();
+  }
+
+  /**
+   * Sign up with email/password
+   */
+  signUp(email, password): Promise<UserCredential> {
+    return this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password);
+    /*.then((result) => {
+      window.alert("You have been successfully registered!");
+      console.log(result.user);
+    }).catch((error) => {
+      window.alert(error.message);
+    });*/
   }
 
   public loginWithEmailAndPassword(email: string, password: string): Promise<any> {
