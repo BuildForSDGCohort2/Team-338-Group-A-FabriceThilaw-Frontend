@@ -1,0 +1,5 @@
+<!--<p>farming-advisors works!</p>-->
+
+<div *ngIf="flagShowNewAdvisorForm === true">
+  <app-new-farming-advisor (eventCloseNewAdvisorForm)="listenToCloseNewAdvisorForm($event)"></app-new-farming-advisor>
+</div>

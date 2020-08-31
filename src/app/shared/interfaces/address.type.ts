@@ -1,13 +1,15 @@
+import Timestamp = firebase.firestore.Timestamp;
+import * as firebase from "firebase";
+
 export interface Address {
   city: string;
   county: string;
   createdBy: string;
-  createdOn: string;
+  createdOn: Timestamp;
   personalEmail: string;
-  id: string;
   modifiedBy: string;
-  modifiedOn: string;
-  name: string;
+  modifiedOn: Timestamp;
+  addressLine: string;
   ownerId: string;
   owningUser: string;
   stateOrProvince: string;

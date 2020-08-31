@@ -11,7 +11,7 @@ const appRoutes: Routes = [
 
   {
     path: "",
-    redirectTo: "piloting-module/overview",
+    redirectTo: "management/overview",
     pathMatch: "full",
     data: {
       title: "Overview"
@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   },
   {
     path: "overview",
-    redirectTo: "piloting-module/overview",
+    redirectTo: "management/overview",
     pathMatch: "full",
     data: {
       title: "Overview"
