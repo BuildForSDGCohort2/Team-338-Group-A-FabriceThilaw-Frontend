@@ -2,7 +2,7 @@ import {SideNavInterface} from "../../interfaces/side-nav.type";
 
 export const ROUTES: SideNavInterface[] = [
   {
-    path: "overview",
+    path: "/management/overview",
     title: "Overview",
     iconType: "nzIcon",
     iconTheme: "outline",
@@ -10,7 +10,7 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
-    path: "advisors",
+    path: "/management/advisors",
     title: "Plot Supervisors",
     iconType: "nzIcon",
     iconTheme: "outline",
@@ -18,7 +18,7 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
-    path: "farmers",
+    path: "/management/farmers",
     title: "Farmers",
     iconType: "nzIcon",
     iconTheme: "outline",
@@ -26,7 +26,7 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
-    path: "inputs",
+    path: "/management/inputs",
     title: "Agricultural Inputs",
     iconType: "nzIcon",
     iconTheme: "outline",
@@ -34,7 +34,7 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
-    path: "statistics",
+    path: "/management/statistics",
     title: "Cost Statistics",
     iconType: "nzIcon",
     iconTheme: "outline",

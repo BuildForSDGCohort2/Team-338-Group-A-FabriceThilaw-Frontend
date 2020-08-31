@@ -9,8 +9,6 @@ import {switchMap} from "rxjs/operators";
 import {LogcatService} from "./logcat.service";
 import {Router} from "@angular/router";
 
-const USER_AUTH_API_URL = "/api-url";
-
 @Injectable()
 export class AuthenticationService implements OnInit {
   private currentUserSubject: BehaviorSubject<AppUser>;
@@ -26,7 +24,7 @@ export class AuthenticationService implements OnInit {
 
   }
 
-  public get currentUserValue(): Observable<any> {
+  public get currentUser$(): Observable<any> {
     return this.observeAuthenticatedCurrentUser();
   }
 
@@ -72,7 +70,7 @@ export class AuthenticationService implements OnInit {
         this.logcat.consoleLog("user", JSON.stringify(authCredential));
         this.authState = authCredential;
         if (authCredential !== null) {
-          return this.api.getCurrentUser(authCredential);
+          return this.api.getCurrentUser$(authCredential);
         } else {
           return of(null);
         }

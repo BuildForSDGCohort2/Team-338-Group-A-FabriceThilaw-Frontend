@@ -4,6 +4,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {DefaultDashboardComponent} from "./default/default-dashboard.component";
 import {AuthGuard} from "../shared/guard/auth.guard";
 import {UserResolver} from "../shared/resolvers/user.resolver";
+import {FarmingAdvisorsComponent} from "./farming-advisors/farming-advisors.component";
 
 const routes: Routes = [
 
@@ -13,11 +14,16 @@ const routes: Routes = [
     resolve: {data: UserResolver},
     data: { // for breadcrumbs
       title: "",
-      path: "Overview",
       headerDisplay: "none"
     },
     canActivate: [AuthGuard]
   },
+  {
+    path: "advisors",
+    component: FarmingAdvisorsComponent,
+    resolve: {data: UserResolver},
+    canActivate: [AuthGuard]
+  }
   /*{
     path: 'with-breadcrumb',
     component: WithBreadcrumbDashboardComponent,

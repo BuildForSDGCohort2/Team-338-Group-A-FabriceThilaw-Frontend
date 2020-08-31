@@ -1,21 +1,29 @@
 import {Address} from "./address.type";
+import * as firebase from "firebase";
+import Timestamp = firebase.firestore.Timestamp;
 
-export const AppUser_ROLES: string[] = ["GREENUP_ADMIN", "OPERATION_MANAGER", "AGRICULTURAL_ADVISOR", "FARMER"];
+
+export enum AppUser_ROLES {
+  GREENUP_ADMIN = "GREENUP_ADMIN",
+  OPERATION_MANAGER = "OPERATION_MANAGER",
+  AGRICULTURAL_ADVISOR = "AGRICULTURAL_ADVISOR",
+  FARMER = "FARMER"
+}
 
 export interface AppUser {
   address: Address;
   createdBy: string;
-  createdOn: string;
+  createdOn: Timestamp;
   firstName: string;
   fullName: string;
   id: string;
   isDisabled: boolean;
   lastName: string;
   modifiedBy: string;
-  modifiedOn: string;
+  modifiedOn: Timestamp;
   personalEmail: string;
   photoUrl: string;
-  token: string;
+  // token: string;
   /**
    * Can be one of the following: GREENUP_ADMIN, OPERATION_MANAGER, AGRICULTURAL_ADVISOR, FARMER
    */
@@ -26,6 +34,7 @@ export interface AppUser {
 export interface OperationManager {
   id: string;
   isDisabled: boolean;
+  photoUrl: string;
   userId: string;
   userFullName: string;
   organizationCode: string;
@@ -48,10 +57,15 @@ export interface FarmingAdvisor {
   areaPerCoachedFarmer: Map<string, string>;
   id: string;
   isDisabled: boolean;
+  photoUrl: string;
   userId: string;
   managerId: string;
   userFullName: string;
 
+  createdBy: string;
+  createdOn: Timestamp;
+  modifiedBy: string;
+  modifiedOn: Timestamp;
 }
 
 export interface Farmer {
