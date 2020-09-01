@@ -89,7 +89,7 @@ export class NewFarmingAdvisorComponent implements OnInit {
       if (dataMap[0] !== null && dataMap[1] !== null && dataMap.length > 0) {
         // send data on server
         this.flagShowLoadingButton = true;
-        this.apiService.sendSaveRequestForNewAdvisorData(dataMap[0], dataMap[1]).then(_ => {
+        this.apiService.sendSaveRequestForNewAdvisorData(dataMap[0], dataMap[1]).then((_) => {
           // When operation completes
           this.flagShowLoadingButton = false;
           // const ev = this.eventCloseNewAdvisorForm;

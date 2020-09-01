@@ -6,7 +6,7 @@ export class FormDataWrapper {
   constructor() {
   }
 
-  static generateFarmingAdvisorObject(userWithAdvisorTitle: AppUser, managerId: string,
+  static generateFarmingAdvisorObject(userWithAdvisorTitle: AppUser, manager: string,
                                       uuid: string, creatorId: string): FarmingAdvisor {
     return {
       areaPerCoachedFarmer: null, supervisedAreaPerCrop: null,
@@ -15,7 +15,7 @@ export class FormDataWrapper {
       photoUrl: userWithAdvisorTitle.photoUrl,
       userFullName: userWithAdvisorTitle.fullName,
       isDisabled: false,
-      managerId: managerId,
+      managerId: manager,
       email: userWithAdvisorTitle.personalEmail,
       telephone1: userWithAdvisorTitle.address.telephone1,
       telephone2: userWithAdvisorTitle.address.telephone2,
@@ -36,7 +36,7 @@ export class FormDataWrapper {
    * @param photoUrl
    * @private
    */
-  static generateUserObject(formData: any, uuid: string, creatorId: string, photoUrl: string): AppUser {
+  static generateUserObject(formData: any, uuid: string, creatorId: string, photo: string): AppUser {
     return {
       address: FormDataWrapper.buildAddressObject(formData, uuid, creatorId),
       createdBy: creatorId,
@@ -49,7 +49,7 @@ export class FormDataWrapper {
       modifiedBy: creatorId,
       modifiedOn: AppService.time,
       personalEmail: formData.personalEmail,
-      photoUrl: photoUrl,
+      photoUrl: photo,
       title: AppUserRoles.ROLE_AGRICULTURAL_ADVISOR
     };
   }

@@ -26,7 +26,7 @@ export class AppService {
   static navigateTo(route: string, router: Router, breadCrumbData: any) {
     // redirect user to dashboard
     router.navigate([route], breadCrumbData)
-      .then(_ => {
+      .then((_) => {
       });
   }
 
