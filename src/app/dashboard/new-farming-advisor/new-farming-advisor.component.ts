@@ -86,13 +86,13 @@ export class NewFarmingAdvisorComponent implements OnInit {
     // Check if current user has the rights to operate
     if (this.apiService.currentUserValue.title === AppUserRoles.ROLE_OPERATION_MANAGER) {
       const dataMap: [AppUser, FarmingAdvisor] = this.convertFormDataIntoFarmingAdvisorUser(formData);
-      if (dataMap[0] != null && dataMap[1] != null && dataMap.length > 0) {
+      if (dataMap[0] !== null && dataMap[1] !== null && dataMap.length > 0) {
         // send data on server
         this.flagShowLoadingButton = true;
         this.apiService.sendSaveRequestForNewAdvisorData(dataMap[0], dataMap[1]).then(_ => {
           // When operation completes
           this.flagShowLoadingButton = false;
-          const ev = this.eventCloseNewAdvisorForm;
+          // const ev = this.eventCloseNewAdvisorForm;
           this.messageService.info("New farm advisor is added");
         });
       }

@@ -54,7 +54,7 @@ export class FormDataWrapper {
     };
   }
 
-  static buildAddressObject(formData: any, ownerId: string, creatorId: string): Address {
+  static buildAddressObject(formData: any, owner: string, creatorId: string): Address {
 
     return {
       city: formData.city,
@@ -65,7 +65,7 @@ export class FormDataWrapper {
       modifiedBy: creatorId,
       modifiedOn: AppService.time,
       addressLine: formData.addressLine,
-      ownerId: ownerId,
+      ownerId: owner,
       owningUser: formData.firstName + " " + formData.lastName,
       stateOrProvince: formData.state,
       telephone1: formData.telephone1,
