@@ -12,13 +12,13 @@ import {switchMap} from "rxjs/operators";
 })
 export class ApiService {
 
-  public static readonly FARMERS = "farmers";
-  public static readonly USERS = "users";
-  public static readonly FARMING_ADVISORS = "farming_advisors";
-  public static readonly FARMS = "farms";
-  public static readonly FARM_INPUTS = "farm_inputs";
-  public static readonly CULTURES = "crops";
-  public static readonly INPUT_SUPPLIERS = "input_suppliers";
+  public static readonly WebServiceFarmersNode = "farmers";
+  public static readonly WebServiceUsersNode = "users";
+  public static readonly WebServiceFarmingAdvisorsNode = "farming_advisors";
+  public static readonly WebServiceFarmsNode = "farms";
+  public static readonly WebServicesFarmInputsNode = "farm_inputs";
+  public static readonly WebServiceCulturesNode = "crops";
+  public static readonly WebServiceInputSuppliersNode = "input_suppliers";
   auth: any;
   private currentAppUser: AppUser;
 
@@ -39,24 +39,19 @@ export class ApiService {
    * @param newUser - the user object to register
    * @param farmAdvisorRoleObject the details of the user role
    */
-  saveNewFarmAdvisor(newUser: AppUser, farmAdvisorRoleObject: FarmingAdvisor): Promise<void> {
+  sendSaveRequestForNewAdvisorData(newUser: AppUser, farmAdvisorRoleObject: FarmingAdvisor): Promise<void> {
     // Going to perform multiple writes as a single atomic operation.
     const bulkWriter = this.db.firestore.batch();
+    // Set the value of the new AppUser
+    const userRef = this.db.firestore.collection(ApiService.WebServiceUsersNode).doc(newUser.id);
+    bulkWriter.set(userRef, {...newUser});
 
-    if (newUser.id === farmAdvisorRoleObject.userId
-      && newUser.title === ApiService.FARMING_ADVISORS) {
+    // Set the value of the farming advisor role object
+    const farmAdvisorRef = this.db.firestore.collection(ApiService.WebServiceFarmingAdvisorsNode).doc(farmAdvisorRoleObject.id);
+    bulkWriter.set(farmAdvisorRef, {...farmAdvisorRoleObject});
 
-      // Set the value of the new AppUser
-      const userRef = this.db.firestore.collection(ApiService.USERS).doc(newUser.id);
-      bulkWriter.set(userRef, {...newUser});
-
-      // Set the value of the farming advisor role object
-      const farmAdvisorRef = this.db.firestore.collection(ApiService.FARMING_ADVISORS).doc(farmAdvisorRoleObject.id);
-      bulkWriter.update(farmAdvisorRef, {...farmAdvisorRoleObject});
-
-      // Commit the bulk
-      return bulkWriter.commit();
-    }
+    // Commit the bulk
+    return bulkWriter.commit();
   }
 
   /**
@@ -64,7 +59,7 @@ export class ApiService {
    * @param authCredentials
    */
   public getCurrentUser$(authCredentials: firebase.User): Observable<AppUser | any> {
-    const path = ApiService.USERS + "/" + authCredentials.uid;
+    const path = ApiService.WebServiceUsersNode + "/" + authCredentials.uid;
     this.logcat.consoleLog("path to get current user", path);
     return this.db.doc<AppUser>(path).valueChanges().pipe(switchMap(data => {
       this.currentAppUser = data;
@@ -77,7 +72,7 @@ export class ApiService {
    * @param managerId
    */
   public getFarmingAdvisors(managerId: string): Observable<FarmingAdvisor[]> {
-    const path = ApiService.FARMING_ADVISORS;
+    const path = ApiService.WebServiceFarmingAdvisorsNode;
     return this.db.collection<FarmingAdvisor>(path, ref => {
       return ref.where("managerId", "==", managerId);
     }).valueChanges();
@@ -88,7 +83,7 @@ export class ApiService {
    * @param advisorId
    */
   public getFarmersCoachedBy(advisorId: string): Observable<Farmer[]> {
-    const path = ApiService.FARMERS;
+    const path = ApiService.WebServiceFarmersNode;
     return this.db.collection<Farmer>(path, ref => {
       return ref.where("advisorId", "==", advisorId);
     }).valueChanges();
@@ -99,7 +94,7 @@ export class ApiService {
    * @param advisorsId
    */
   public getFarmersCoachedByManagerTeam(advisorsId: string[]): Observable<Farmer[]> {
-    const path = ApiService.FARMERS;
+    const path = ApiService.WebServiceFarmersNode;
     return this.db.collection<Farmer>(path, ref => {
       return ref.where("advisorId", "in", advisorsId);
     }).valueChanges();

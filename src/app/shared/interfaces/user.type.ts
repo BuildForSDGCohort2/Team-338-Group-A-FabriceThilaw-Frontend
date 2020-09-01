@@ -4,9 +4,9 @@ import Timestamp = firebase.firestore.Timestamp;
 
 
 export enum AppUserRoles {
-  GREENUP_ADMIN = "GREENUP_ADMIN",
-  OPERATION_MANAGER = "OPERATION_MANAGER",
-  AGRICULTURAL_ADVISOR = "AGRICULTURAL_ADVISOR",
+  ROLE_GREENUP_ADMIN = "ROLE_GREENUP_ADMIN",
+  ROLE_OPERATION_MANAGER = "ROLE_OPERATION_MANAGER",
+  ROLE_AGRICULTURAL_ADVISOR = "ROLE_AGRICULTURAL_ADVISOR",
   FARMER = "FARMER"
 }
 
@@ -60,7 +60,11 @@ export interface FarmingAdvisor {
   photoUrl: string;
   userId: string;
   managerId: string;
+
   userFullName: string;
+  email: string;
+  telephone1: string;
+  telephone2: string;
 
   createdBy: string;
   createdOn: Timestamp;
