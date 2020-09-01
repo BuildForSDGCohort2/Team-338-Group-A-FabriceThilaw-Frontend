@@ -5,6 +5,7 @@ import {AppService} from "../../shared/services/app.service";
 import {ApiService} from "../../shared/services/api.service";
 import {LogcatService} from "../../shared/services/logcat.service";
 import {NzMessageService} from "ng-zorro-antd";
+import {FormDataWrapper} from "../FormDataWrapper";
 
 @Component({
   selector: "app-new-farming-advisor",
@@ -52,25 +53,27 @@ export class NewFarmingAdvisorComponent implements OnInit {
     this.eventCloseNewAdvisorForm.emit(true);
   }
 
-  collectNewAdvisorData(formData: any) {
+  /**
+   *
+   * @param formData
+   */
+  convertFormDataIntoFarmingAdvisorUser(formData: any): [AppUser, FarmingAdvisor] {
     // create a new user object
-    const newUser: AppUser = this.buildAppFarmAdvisorUserObject(formData);
+    const newId = this.apiService.randomUUID;
+    const creator: AppUser = this.apiService.currentUserValue;
+    const photoUrl = ""; // todo make function to get picture url
+    const newUser: AppUser = FormDataWrapper.generateUserObject(formData, newId, creator.id, photoUrl);
     this.logcat.consoleLog("Build user", JSON.stringify(newUser));
     // create a new advisor object
-    const newAdvisor: FarmingAdvisor = this.buildFarmingAdvisorObject(newUser);
+    const newAdvisor: FarmingAdvisor = this.getNewFarmingAdvisor(newUser);
     this.logcat.consoleLog("Built FarmAdvisor object", JSON.stringify(newAdvisor));
-    // send data on server
-    const ev = this.eventCloseNewAdvisorForm;
-    const msg = this.messageService;
-    this.apiService.saveNewFarmAdvisor(newUser, newAdvisor).then(function () {
-      // when request is successful show a message
-      // and trigger a close form event
-      msg.success(newAdvisor.userFullName + " is registered.");
-      ev.emit(true);
-    });
-
+    return [newUser, newAdvisor];
   }
 
+
+  /**
+   *
+   */
   checkUserInput() {
     for (const i in this.formGroup.controls) {
       if (i !== null) {
@@ -80,38 +83,23 @@ export class NewFarmingAdvisorComponent implements OnInit {
     }
     const formData: any = this.formGroup.value;
     this.logcat.consoleLog("Form data", JSON.stringify(formData));
-    if (this.apiService.currentUserValue.title === AppUserRoles.OPERATION_MANAGER) {
-      this.collectNewAdvisorData(formData);
+    // Check if current user has the rights to operate
+    if (this.apiService.currentUserValue.title === AppUserRoles.ROLE_OPERATION_MANAGER) {
+      const dataMap: [AppUser, FarmingAdvisor] = this.convertFormDataIntoFarmingAdvisorUser(formData);
+      if (dataMap[0] !== null && dataMap[1] !== null && dataMap.length > 0) {
+        // send data on server
+        this.flagShowLoadingButton = true;
+        this.apiService.sendSaveRequestForNewAdvisorData(dataMap[0], dataMap[1]).then((_) => {
+          // When operation completes
+          this.flagShowLoadingButton = false;
+          // const ev = this.eventCloseNewAdvisorForm;
+          this.messageService.info("New farm advisor is added");
+        });
+      }
     } else {
       this.messageService.error("You don't have the right to make this operation.");
     }
 
-  }
-
-  /**
-   *
-   * Builds a AppUser object from form's data
-   * @param formData
-   * @private
-   */
-  private buildAppFarmAdvisorUserObject(formData: any): AppUser {
-    const newId = this.apiService.randomUUID;
-    const creator: AppUser = this.apiService.currentUserValue;
-    return {
-      address: AppService.buildAddressObject(formData, newId, creator.id),
-      createdBy: creator.id,
-      createdOn: AppService.time,
-      firstName: formData.firstName,
-      fullName: AppService.getFullName(formData),
-      id: newId,
-      isDisabled: false,
-      lastName: formData.lastName,
-      modifiedBy: creator.id,
-      modifiedOn: AppService.time,
-      personalEmail: formData.personalEmail,
-      photoUrl: "",
-      title: AppUserRoles.AGRICULTURAL_ADVISOR
-    };
   }
 
 
@@ -123,11 +111,11 @@ export class NewFarmingAdvisorComponent implements OnInit {
    * @param userWithAdvisorTitle - user object that has the title "AGRICULTURAL_ADVISOR
    * @private
    */
-  private buildFarmingAdvisorObject(userWithAdvisorTitle: AppUser): FarmingAdvisor {
+  private getNewFarmingAdvisor(userWithAdvisorTitle: AppUser): FarmingAdvisor {
     let managerId: string = null;
 
     // Check if the currently connected user has the rights to make farming advisors
-    if (this.apiService.currentUserValue.title === AppUserRoles.OPERATION_MANAGER
+    if (this.apiService.currentUserValue.title === AppUserRoles.ROLE_OPERATION_MANAGER
     ) {
       managerId = this.apiService.currentUserValue.id;
     } else {
@@ -136,22 +124,12 @@ export class NewFarmingAdvisorComponent implements OnInit {
     }
     // create object if current creator has the rights for this
     // otherwise return null
-    if (userWithAdvisorTitle.title === AppUserRoles.AGRICULTURAL_ADVISOR) {
+    if (userWithAdvisorTitle.title === AppUserRoles.ROLE_AGRICULTURAL_ADVISOR) {
+      const uuid = this.apiService.randomUUID;
+      const creatorId = this.apiService.currentUserValue.id;
 
-      return {
-        areaPerCoachedFarmer: null, supervisedAreaPerCrop: null,
-        id: this.apiService.randomUUID,
-        isDisabled: false,
-        photoUrl: "",
-        userId: userWithAdvisorTitle.id,
-        managerId: managerId,
-        userFullName: userWithAdvisorTitle.fullName,
-
-        createdBy: this.apiService.currentUserValue.id,
-        createdOn: AppService.time,
-        modifiedBy: this.apiService.currentUserValue.id,
-        modifiedOn: AppService.time
-      };
+      return FormDataWrapper.generateFarmingAdvisorObject(userWithAdvisorTitle
+        , managerId, uuid, creatorId);
     } else {
       return null;
     }

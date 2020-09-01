@@ -44,7 +44,7 @@ export class CommonLayoutComponent implements OnInit {
     this.breadcrumbs$ = this.router.events.pipe(
       startWith(new NavigationEnd(0, "/", "/")),
       filter(event => event instanceof NavigationEnd), distinctUntilChanged(),
-      map(_ => this.buildBreadCrumb(this.activatedRoute.root))
+      map((_) => this.buildBreadCrumb(this.activatedRoute.root))
     );
     this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
     this.themeService.isSideNavDarkChanges.subscribe(isDark => this.isSideNavDark = isDark);

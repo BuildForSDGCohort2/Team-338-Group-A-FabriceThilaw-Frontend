@@ -1,9 +1,11 @@
 <nz-card>
-  <div class="m-v-20">
+  <div>
+    <nz-page-header-title class="m-v-20">Register a farming advisor</nz-page-header-title>
+
     <form (submit)="checkUserInput()" [formGroup]="formGroup" nz-form nzLayout="vertical">
       <!--Identity fields-->
       <nz-form-item>
-        <h4>Identity info</h4>
+        <h5>Identity info</h5>
         <div [nzGutter]="16" nz-row>
           <div [nzSpan]="12" nz-col>
             <nz-form-control>
@@ -31,7 +33,7 @@
 
       <!--Contact fields-->
       <nz-form-item>
-        <h4>Contact info</h4>
+        <h5>Contact info</h5>
         <div [nzGutter]="16" nz-row>
           <div [nzSpan]="12" nz-col>
             <nz-form-control>
@@ -71,7 +73,7 @@
 
       <!-- Address fields-->
       <nz-form-item>
-        <h4>Address info</h4>
+        <h5>Address info</h5>
         <div nz-row nzGutter="16">
           <div [nzSpan]="12" nz-col>
             <nz-form-control>
@@ -111,7 +113,7 @@
       <nz-form-item>
         <nz-form-control>
           <div class="text-right">
-            <!--<button (click)="closeNewAdvisorForm()" class="m-r-10" nz-button nzType="default">Cancel</button>-->
+            <button (click)="closeNewAdvisorForm()" class="m-r-10" nz-button nzType="default">Cancel</button>
             <button [disabled]="formGroup.invalid"
                     [nzLoading]="flagShowLoadingButton"
                     class="login-form-button"
