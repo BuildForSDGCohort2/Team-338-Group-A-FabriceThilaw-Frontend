@@ -16,6 +16,7 @@ export class FormDataWrapper {
       userFullName: userWithAdvisorTitle.fullName,
       isDisabled: false,
       managerId: manager,
+      farmersCount: 0,
       email: userWithAdvisorTitle.personalEmail,
       telephone1: userWithAdvisorTitle.address.telephone1,
       telephone2: userWithAdvisorTitle.address.telephone2,
@@ -33,7 +34,7 @@ export class FormDataWrapper {
    * @param formData
    * @param uuid
    * @param creatorId
-   * @param photoUrl
+   * @param photo
    * @private
    */
   static generateUserObject(formData: any, uuid: string, creatorId: string, photo: string): AppUser {
