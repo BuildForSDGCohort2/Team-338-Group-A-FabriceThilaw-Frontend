@@ -88,7 +88,7 @@ export class FarmingAdvisorsComponent implements OnInit {
     this.flagShowAdvisorListLoader = true;
     this.flagShowNewAdvisorForm = false;
 
-    if (manager !== null && manager !== undefined) {
+    if (manager !== null) {
 
       this.apiService.getFarmingAdvisors(manager.id).subscribe(
         (data) => {
@@ -100,11 +100,9 @@ export class FarmingAdvisorsComponent implements OnInit {
           this.flagShowNewAdvisorForm = false;
 
           // check the data that is found
-          if (data !== undefined) {
-            if (data !== null) {
-              this.allFarmingAdvisor = data;
-              this.flagShowAdvisorListEmpty = (data.length === 0);
-            }
+          if (data !== null) {
+            this.allFarmingAdvisor = data;
+            this.flagShowAdvisorListEmpty = (data.length === 0);
           }
         }
       );
