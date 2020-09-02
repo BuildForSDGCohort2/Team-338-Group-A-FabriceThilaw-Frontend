@@ -55,6 +55,7 @@ export interface FarmingAdvisor {
    * A map of <Coached farmer id, Coached farmer's area supervised>
    */
   areaPerCoachedFarmer: Map<string, string>;
+  farmersCount: number;
   id: string;
   isDisabled: boolean;
   photoUrl: string;
