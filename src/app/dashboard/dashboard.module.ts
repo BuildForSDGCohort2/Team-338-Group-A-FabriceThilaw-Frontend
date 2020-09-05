@@ -6,9 +6,11 @@ import {ThemeConstantService} from "../shared/services/theme-constant.service";
 
 import {DefaultDashboardComponent} from "./default/default-dashboard.component";
 import {WithBreadcrumbDashboardComponent} from "./with-breadcrumb/with-breadcrumb-dashboard.component";
-import {FarmingAdvisorsComponent} from "./farming-advisors/farming-advisors.component";
+import {FarmingAdvisorsListComponent} from "./farming-advisors-list/farming-advisors-list.component";
 import {NewFarmingAdvisorComponent} from "./new-farming-advisor/new-farming-advisor.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ProducersListComponent} from "./producers-list/producers-list.component";
+import {NewProducerComponent} from "./new-producer/new-producer.component";
 
 
 @NgModule({
@@ -22,8 +24,10 @@ import {ReactiveFormsModule} from "@angular/forms";
   declarations: [
     DefaultDashboardComponent,
     WithBreadcrumbDashboardComponent,
-    FarmingAdvisorsComponent,
-    NewFarmingAdvisorComponent
+    FarmingAdvisorsListComponent,
+    NewFarmingAdvisorComponent,
+    ProducersListComponent,
+    NewProducerComponent,
   ],
   providers: [
     ThemeConstantService

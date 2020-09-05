@@ -18,8 +18,8 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
-    path: "/management/farmers",
-    title: "Farmers",
+    path: "/management/producers",
+    title: "Producers",
     iconType: "nzIcon",
     iconTheme: "outline",
     icon: "appstore",

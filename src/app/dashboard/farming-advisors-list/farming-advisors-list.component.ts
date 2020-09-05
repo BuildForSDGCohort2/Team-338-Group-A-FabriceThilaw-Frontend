@@ -1,30 +1,29 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppUser, FarmingAdvisor} from "../../shared/interfaces/user.type";
 import {ApiService} from "../../shared/services/api.service";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: "app-farming-advisors",
-  templateUrl: "./farming-advisors.component.html",
-  styleUrls: ["./farming-advisors.component.css"]
+  templateUrl: "./farming-advisors-list.component.html",
+  styleUrls: ["./farming-advisors-list.component.css"]
 })
-export class FarmingAdvisorsComponent implements OnInit {
-  view = "cardView";
+export class FarmingAdvisorsListComponent implements OnInit {
+  advisorListViewMode = "cardView";
 
-  formGroup: FormGroup;
   allFarmingAdvisor: FarmingAdvisor[] = [];
 
   // flags
   flagShowAdvisorListLoader = true;
   flagShowAdvisorList = true;
-  flagShowAdvisorListEmpty = false;
+  flagShowAdvisorListEmpty = true;
   flagShowNewAdvisorForm = false;
 
-  constructor(private formBuilder: FormBuilder, private  apiService: ApiService) {
+  constructor(private  apiService: ApiService,
+              private  messageService: NzMessageService) {
   }
 
   ngOnInit() {
-    this.initForm();
     const currentUser = this.apiService.currentUserValue;
     this.getAllAdvisors(currentUser);
   }
@@ -34,30 +33,11 @@ export class FarmingAdvisorsComponent implements OnInit {
    * @param $event
    */
   listenToCloseNewAdvisorForm($event: boolean) {
-    // raise the flag
+    this.messageService.info("New farm advisor is added");
+    // raise the flags
     this.flagShowNewAdvisorForm = false;
     this.flagShowAdvisorList = true;
-  }
-
-  /**
-   *
-   */
-  initForm() {
-    this.formGroup = this.formBuilder.group({
-      // identity
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
-      photoUrl: [null, [Validators.required]],
-      // contact
-      personalEmail: [null, [Validators.required]],
-      telephone1: [null, [Validators.required]],
-      telephone2: [null, [Validators.required]],
-      // address
-      addressLine: [null, [Validators.required]],
-      stateOrProvince: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      county: [null, [Validators.required]],
-    });
+    this.advisorListViewMode = "cardView";
   }
 
   /**

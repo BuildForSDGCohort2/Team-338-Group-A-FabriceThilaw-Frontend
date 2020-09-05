@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppUser, AppUserRoles, FarmingAdvisor} from "../../shared/interfaces/user.type";
 import {AppService} from "../../shared/services/app.service";
@@ -17,6 +17,7 @@ export class NewFarmingAdvisorComponent implements OnInit {
   formGroup: FormGroup;
   // flags
   flagShowLoadingButton = false;
+  @Output() eventCloseNewAdvisorForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private formBuilder: FormBuilder,
               private apiService: ApiService,
@@ -48,6 +49,9 @@ export class NewFarmingAdvisorComponent implements OnInit {
     });
   }
 
+  closeNewAdvisorForm() {
+    this.eventCloseNewAdvisorForm.emit(true);
+  }
 
   /**
    *
@@ -88,7 +92,7 @@ export class NewFarmingAdvisorComponent implements OnInit {
         this.apiService.sendSaveRequestForNewAdvisorData(dataMap[0], dataMap[1]).then((_) => {
           // When operation completes
           this.flagShowLoadingButton = false;
-          this.messageService.info("New farm advisor is added");
+          this.closeNewAdvisorForm();
         });
       }
     } else {
