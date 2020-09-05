@@ -5,6 +5,7 @@ import {DefaultDashboardComponent} from "./default/default-dashboard.component";
 import {AuthGuard} from "../shared/guard/auth.guard";
 import {UserResolver} from "../shared/resolvers/user.resolver";
 import {FarmingAdvisorsListComponent} from "./farming-advisors-list/farming-advisors-list.component";
+import {ProducersListComponent} from "./producers-list/producers-list.component";
 
 const routes: Routes = [
 
@@ -21,6 +22,12 @@ const routes: Routes = [
   {
     path: "advisors",
     component: FarmingAdvisorsListComponent,
+    resolve: {data: UserResolver},
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "producers",
+    component: ProducersListComponent,
     resolve: {data: UserResolver},
     canActivate: [AuthGuard]
   }
