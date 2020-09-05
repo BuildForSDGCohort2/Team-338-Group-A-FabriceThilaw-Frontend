@@ -17,7 +17,7 @@ export class ProducersListComponent implements OnInit {
   // flags
   flagShowProducerListLoader = true;
   flagShowProducerList = true;
-  flagShowProducerListEmpty = false;
+  flagShowProducerListEmpty = true;
   flagShowNewProducerForm = false;
 
   constructor(private  apiService: ApiService,
@@ -62,6 +62,41 @@ export class ProducersListComponent implements OnInit {
 
   /**
    *
+   * @param producer
+   */
+  getCurrentFarmerAdvisor(producer: Farmer): string {
+    if (producer.advisorId != null) {
+      return producer.advisorFullName ? producer.advisorFullName : "Not set";
+    }
+    return "Not set";
+  }
+
+  /**
+   *
+   * @param producer
+   */
+  getCultivableAreaForProducer(producer: Farmer): number {
+    const areaMap = Array.from(producer.areaPerCrop.values());
+    if (areaMap != null) {
+      return areaMap.reduce((a, b) => a + b, 0);
+    }
+    return 0;
+  }
+
+  /**
+   *
+   * @param producer
+   */
+  getNumberOfActivePlots(producer: Farmer): number {
+    const areaMap = producer.areaPerCrop;
+    if (areaMap != null) {
+      return 0;
+    }
+    return 0;
+  }
+
+  /**
+   *
    * @private
    * @param manager
    */
@@ -89,4 +124,5 @@ export class ProducersListComponent implements OnInit {
       );
     }
   }
+
 }

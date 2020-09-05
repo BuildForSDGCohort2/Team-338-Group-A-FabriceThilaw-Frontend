@@ -108,7 +108,7 @@ export class ApiService {
   public getAllFarmersForManager(managerId: string): Observable<Farmer[]> {
     const path = ApiService.WebServiceFarmersNode;
     return this.db.collection<Farmer>(path, ref => {
-      return ref.where("managerId", "in", managerId);
+      return ref.where("managerId", "==", managerId);
     }).valueChanges();
   }
 

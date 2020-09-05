@@ -12,7 +12,8 @@
     <div class="col-md-6">
       <div class="text-md-right m-v-10">
         <nz-radio-group [(ngModel)]="producerListViewMode">
-          <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="Add new producer" nzValue="newProducer">
+          <label *ngIf="flagShowProducerListLoader === false" nz-radio-button nz-tooltip nzPlacement="bottom"
+                 nzTitle="Add new producer" nzValue="newProducer">
             <i class="font-size-16" nz-icon nzType="plus" theme="outline"></i>
           </label>
           <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="List View" nzValue="listView">
@@ -27,7 +28,6 @@
   </div>
 </div>
 <div
-  *ngIf="(flagShowProducerListLoader === true || flagShowProducerListEmpty === true) && flagShowNewProducerForm  === false"
   class="col-lg-11 mx-auto">
   <!-- SHow this while list is loading-->
   <div *ngIf="flagShowProducerListLoader === true" class="col-lg-11 mx-auto">
@@ -35,7 +35,9 @@
   </div>
 
   <!-- Show this when fetched list is empty-->
-  <div *ngIf="flagShowProducerListEmpty === true && flagShowProducerListLoader === false" class="col-lg-11 mx-auto">
+  <div
+    *ngIf="flagShowProducerListEmpty === true && flagShowProducerListLoader === false && producerListViewMode !== 'newProducer'"
+    class="col-lg-11 mx-auto">
     <div>
       <h4>No producer</h4>
       <p>Add profiles for the farmers that your organization supports.</p>
@@ -62,18 +64,21 @@
 <div class="row">
   <div class="col-lg-11 mx-auto">
     <!-- Card View -->
-    <div *ngIf="producerListViewMode == 'cardView'" class="row">
+    <div *ngIf="producerListViewMode == 'cardView' && flagShowProducerListEmpty === false" class="row">
       <div *ngFor="let item of allProducers" class="col-md-3">
         <nz-card>
           <div class="m-t-20 text-center">
             <nz-avatar [nzSize]="100" [nzSrc]="getProducerPicture(item.photoUrl)" class="shadow"
                        nzIcon="user"></nz-avatar>
             <h4 class="m-t-30">{{item.userFullName}}</h4>
-            <p>{{item.email}}</p>
-            <!-- <p>{{item.telephone1}}</p>-->
+            <p>{{item.telephone1}}</p>
           </div>
           <div class="text-center m-t-15">
-            <p>{{item.farmersCount ? item.farmersCount : 0}} farmers supported</p>
+            <p>
+              {{getCultivableAreaForProducer(item)}}Ha
+              <br>
+              {{getNumberOfActivePlots(item)}} farms
+            </p>
           </div>
           <div class="text-center m-t-30">
             <a [routerLink]="['/pages/profile']" class="link-button-padding-0" nz-button nzGhost nzType="primary">
@@ -84,15 +89,17 @@
         </nz-card>
       </div>
     </div>
+
     <!-- List View -->
-    <nz-card *ngIf="advisorListViewMode == 'listView'">
-      <nz-table #listViewTable [nzData]="allFarmingProducer">
+    <nz-card *ngIf="producerListViewMode == 'listView' && flagShowProducerListEmpty === false">
+      <nz-table #listViewTable [nzData]="allProducers">
         <thead>
         <tr>
           <th>Name</th>
-          <th>Email</th>
-          <th>Supported farmers</th>
-          <th></th>
+          <th>Contact</th>
+          <th>Producing</th>
+          <th>Farms</th>
+          <th>Advisor</th>
         </tr>
         </thead>
         <tbody>
@@ -106,10 +113,16 @@
             </div>
           </td>
           <td>
-            <span class="text-gray">{{item.email}}</span>
+            <span class="text-gray">{{item.telephone1}}</span>
           </td>
           <td>
-            <span>{{item.farmersCount ? item.farmersCount : 0}}</span>
+            <span>{{getCultivableAreaForProducer(item)}}</span>
+          </td>
+          <td>
+            <span>{{getNumberOfActivePlots(item)}}</span>
+          </td>
+          <td>
+            <span>{{getCurrentFarmerAdvisor(item)}}</span>
           </td>
           <td class="text-right">
             <a [routerLink]="['/pages/profile']" class="link-button-padding-0" nz-button nzGhost nzType="primary">
@@ -125,6 +138,6 @@
 </div>
 
 <!-- Form to add a new producer profile -->
-<div *ngIf="flagShowNewProducerForm === true || producerListViewMode === 'newAdvisor'">
-  <app-new-producer (eventCloseNewAdvisorForm)="listenToCloseNewProducerForm($event)"></app-new-producer>
+<div *ngIf="flagShowNewProducerForm === true || producerListViewMode === 'newProducer'">
+  <app-add-new-producer (eventCloseNewProduceurForm)="listenToCloseNewProducerForm($event)"></app-add-new-producer>
 </div>

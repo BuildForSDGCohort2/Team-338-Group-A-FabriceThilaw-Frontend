@@ -10,6 +10,7 @@ import {FarmingAdvisorsListComponent} from "./farming-advisors-list/farming-advi
 import {NewFarmingAdvisorComponent} from "./new-farming-advisor/new-farming-advisor.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ProducersListComponent} from "./producers-list/producers-list.component";
+import {NewProducerComponent} from "./new-producer/new-producer.component";
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {ProducersListComponent} from "./producers-list/producers-list.component"
     FarmingAdvisorsListComponent,
     NewFarmingAdvisorComponent,
     ProducersListComponent,
+    NewProducerComponent,
   ],
   providers: [
     ThemeConstantService

@@ -16,7 +16,7 @@ export class FarmingAdvisorsListComponent implements OnInit {
   // flags
   flagShowAdvisorListLoader = true;
   flagShowAdvisorList = true;
-  flagShowAdvisorListEmpty = false;
+  flagShowAdvisorListEmpty = true;
   flagShowNewAdvisorForm = false;
 
   constructor(private  apiService: ApiService,

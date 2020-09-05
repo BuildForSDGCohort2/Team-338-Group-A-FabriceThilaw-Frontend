@@ -80,15 +80,26 @@ export interface Farmer {
   addressLine: string;
 
   advisorId: string;
-
+  advisorFullName: string;
 
   /**
    * A map of <Crop name, Cultivated area>
    */
-  areaPerCrop: Map<string, string>;
+  areaPerCrop: Map<string, number>;
 
   id: string;
   isDisabled: boolean;
+  photoUrl: string;
+  userId: string;
+  managerId: string;
+
+  userFullName: string;
+
+  createdBy: string;
+  createdOn: Timestamp;
+  modifiedBy: string;
+  modifiedOn: Timestamp;
+
 
   /**
    * Same telephone1 as in the user's address
@@ -99,7 +110,5 @@ export interface Farmer {
    */
   telephone2: string;
 
-  userId: string;
-  userFullName: string;
 }
 
