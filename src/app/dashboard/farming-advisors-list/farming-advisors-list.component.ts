@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder} from "@angular/forms";
 import {AppUser, FarmingAdvisor} from "../../shared/interfaces/user.type";
 import {ApiService} from "../../shared/services/api.service";
 import {NzMessageService} from "ng-zorro-antd";
@@ -20,7 +19,7 @@ export class FarmingAdvisorsListComponent implements OnInit {
   flagShowAdvisorListEmpty = false;
   flagShowNewAdvisorForm = false;
 
-  constructor(private formBuilder: FormBuilder, private  apiService: ApiService,
+  constructor(private  apiService: ApiService,
               private  messageService: NzMessageService) {
   }
 

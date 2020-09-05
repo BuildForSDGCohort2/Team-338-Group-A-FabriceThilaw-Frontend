@@ -1,1 +1,130 @@
-<p>producers-list works!</p>
+<div class="page-header">
+  <div class="row align-items-md-center">
+    <div class="col-md-6">
+      <div class="media m-v-10">
+        <nz-avatar [nzShape]="'square'" [nzSize]="40" class="ant-avatar-cyan" nzIcon="star"></nz-avatar>
+        <div class="media-body m-l-15">
+          <h6 class="mb-0">All members ({{allProducers.length}})</h6>
+          <span class="text-gray font-size-13">Producers</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="text-md-right m-v-10">
+        <nz-radio-group [(ngModel)]="producerListViewMode">
+          <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="Add new producer" nzValue="newProducer">
+            <i class="font-size-16" nz-icon nzType="plus" theme="outline"></i>
+          </label>
+          <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="List View" nzValue="listView">
+            <i class="font-size-16" nz-icon nzType="ordered-list" theme="outline"></i>
+          </label>
+          <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="Card View" nzValue="cardView">
+            <i class="font-size-16" nz-icon nzType="appstore" theme="outline"></i>
+          </label>
+        </nz-radio-group>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="(flagShowProducerListLoader === true || flagShowProducerListEmpty === true) && flagShowNewProducerForm  === false"
+  class="col-lg-11 mx-auto">
+  <!-- SHow this while list is loading-->
+  <div *ngIf="flagShowProducerListLoader === true" class="col-lg-11 mx-auto">
+    <button nz-button nzLoading nzType="primary"><i nz-icon nzType="poweroff"></i>Loading</button>
+  </div>
+
+  <!-- Show this when fetched list is empty-->
+  <div *ngIf="flagShowProducerListEmpty === true && flagShowProducerListLoader === false" class="col-lg-11 mx-auto">
+    <div>
+      <h4>No producer</h4>
+      <p>Add profiles for the farmers that your organization supports.</p>
+      <div class="m-t-25">
+        <nz-empty
+          [nzNotFoundContent]="contentTpl"
+          [nzNotFoundFooter]="footerTpl"
+          [nzNotFoundImage]="
+              'https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original'
+            "
+        >
+          <ng-template #contentTpl>
+            <span>Create your first farmer profile.</span>
+          </ng-template>
+          <ng-template #footerTpl>
+            <button (click)="onAddNewProducer()" nz-button nzType="primary">Create Now</button>
+          </ng-template>
+        </nz-empty>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-11 mx-auto">
+    <!-- Card View -->
+    <div *ngIf="producerListViewMode == 'cardView'" class="row">
+      <div *ngFor="let item of allProducers" class="col-md-3">
+        <nz-card>
+          <div class="m-t-20 text-center">
+            <nz-avatar [nzSize]="100" [nzSrc]="getProducerPicture(item.photoUrl)" class="shadow"
+                       nzIcon="user"></nz-avatar>
+            <h4 class="m-t-30">{{item.userFullName}}</h4>
+            <p>{{item.email}}</p>
+            <!-- <p>{{item.telephone1}}</p>-->
+          </div>
+          <div class="text-center m-t-15">
+            <p>{{item.farmersCount ? item.farmersCount : 0}} farmers supported</p>
+          </div>
+          <div class="text-center m-t-30">
+            <a [routerLink]="['/pages/profile']" class="link-button-padding-0" nz-button nzGhost nzType="primary">
+              <!-- <i nz-icon nzType="mail" theme="outline"></i> -->
+              <span class="m-l-5">Details</span>
+            </a>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <!-- List View -->
+    <nz-card *ngIf="advisorListViewMode == 'listView'">
+      <nz-table #listViewTable [nzData]="allFarmingProducer">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Supported farmers</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of listViewTable.data">
+          <td>
+            <div class="media align-items-center">
+              <nz-avatar [nzSrc]="getProducerPicture(item.photoUrl)" nzIcon="star"></nz-avatar>
+              <div class="media-body m-l-15">
+                <h6 class="mb-0">{{item.fullName}}</h6>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="text-gray">{{item.email}}</span>
+          </td>
+          <td>
+            <span>{{item.farmersCount ? item.farmersCount : 0}}</span>
+          </td>
+          <td class="text-right">
+            <a [routerLink]="['/pages/profile']" class="link-button-padding-0" nz-button nzGhost nzType="primary">
+              <!--<i nz-icon nzType="mail" theme="outline"></i>-->
+              <span class="m-l-5">Details</span>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>
+
+<!-- Form to add a new producer profile -->
+<div *ngIf="flagShowNewProducerForm === true || producerListViewMode === 'newAdvisor'">
+  <app-new-producer (eventCloseNewAdvisorForm)="listenToCloseNewProducerForm($event)"></app-new-producer>
+</div>
