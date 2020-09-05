@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-6">
       <div class="text-md-right m-v-10">
-        <nz-radio-group [(ngModel)]="view">
+        <nz-radio-group [(ngModel)]="advisorListViewMode">
           <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="Add new advisor" nzValue="newAdvisor">
             <i class="font-size-16" nz-icon nzType="plus" theme="outline"></i>
           </label>
@@ -63,7 +63,7 @@
 <div class="row">
   <div class="col-lg-11 mx-auto">
     <!-- Card View -->
-    <div *ngIf="view == 'cardView'" class="row">
+    <div *ngIf="advisorListViewMode == 'cardView'" class="row">
       <div *ngFor="let item of allFarmingAdvisor" class="col-md-3">
         <nz-card>
           <div class="m-t-20 text-center">
@@ -86,7 +86,7 @@
       </div>
     </div>
     <!-- List View -->
-    <nz-card *ngIf="view == 'listView'">
+    <nz-card *ngIf="advisorListViewMode == 'listView'">
       <nz-table #listViewTable [nzData]="allFarmingAdvisor">
         <thead>
         <tr>
@@ -126,6 +126,6 @@
 </div>
 
 <!-- Form to add a new advisor profile -->
-<div *ngIf="flagShowNewAdvisorForm === true || view === 'newAdvisor'">
-  <app-new-farming-advisor></app-new-farming-advisor>
+<div *ngIf="flagShowNewAdvisorForm === true || advisorListViewMode === 'newAdvisor'">
+  <app-new-farming-advisor (eventCloseNewAdvisorForm)="listenToCloseNewAdvisorForm($event)"></app-new-farming-advisor>
 </div>

@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder} from "@angular/forms";
 import {AppUser, FarmingAdvisor} from "../../shared/interfaces/user.type";
 import {ApiService} from "../../shared/services/api.service";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: "app-farming-advisors",
@@ -9,7 +10,7 @@ import {ApiService} from "../../shared/services/api.service";
   styleUrls: ["./farming-advisors-list.component.css"]
 })
 export class FarmingAdvisorsListComponent implements OnInit {
-  view = "cardView";
+  advisorListViewMode = "cardView";
 
   allFarmingAdvisor: FarmingAdvisor[] = [];
 
@@ -19,7 +20,8 @@ export class FarmingAdvisorsListComponent implements OnInit {
   flagShowAdvisorListEmpty = false;
   flagShowNewAdvisorForm = false;
 
-  constructor(private formBuilder: FormBuilder, private  apiService: ApiService) {
+  constructor(private formBuilder: FormBuilder, private  apiService: ApiService,
+              private  messageService: NzMessageService) {
   }
 
   ngOnInit() {
@@ -32,9 +34,11 @@ export class FarmingAdvisorsListComponent implements OnInit {
    * @param $event
    */
   listenToCloseNewAdvisorForm($event: boolean) {
-    // raise the flag
+    this.messageService.info("New farm advisor is added");
+    // raise the flags
     this.flagShowNewAdvisorForm = false;
     this.flagShowAdvisorList = true;
+    this.advisorListViewMode = "cardView";
   }
 
   /**
