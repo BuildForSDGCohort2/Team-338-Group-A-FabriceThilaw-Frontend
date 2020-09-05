@@ -90,13 +90,25 @@ export class ApiService {
   }
 
   /**
-   * Returns a list of farmers for a given operation manager
+   * Returns a list of farmers for a given operation manager filtered by
    * @param advisorsId
    */
   public getFarmersCoachedByManagerTeam(advisorsId: string[]): Observable<Farmer[]> {
     const path = ApiService.WebServiceFarmersNode;
     return this.db.collection<Farmer>(path, ref => {
       return ref.where("advisorId", "in", advisorsId);
+    }).valueChanges();
+  }
+
+
+  /**
+   * Returns a list of farmers for a given operation manager
+   * @param managerId
+   */
+  public getAllFarmersForManager(managerId: string): Observable<Farmer[]> {
+    const path = ApiService.WebServiceFarmersNode;
+    return this.db.collection<Farmer>(path, ref => {
+      return ref.where("managerId", "in", managerId);
     }).valueChanges();
   }
 

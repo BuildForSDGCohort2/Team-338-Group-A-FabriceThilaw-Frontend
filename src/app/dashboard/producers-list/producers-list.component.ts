@@ -62,10 +62,31 @@ export class ProducersListComponent implements OnInit {
 
   /**
    *
-   * @param currentUser
    * @private
+   * @param manager
    */
-  private getAllProducers(currentUser: AppUser) {
+  private getAllProducers(manager: AppUser) {
+    this.flagShowProducerListLoader = true;
+    this.flagShowNewProducerForm = false;
 
+    if (manager !== null) {
+
+      this.apiService.getAllFarmersForManager(manager.id).subscribe(
+        (data) => {
+
+          // rise a flag because data is loading
+          this.flagShowProducerListLoader = false;
+
+          // rise a flag to hide advisor forms
+          this.flagShowNewProducerForm = false;
+
+          // check the data that is found
+          if (data !== null) {
+            this.allProducers = data;
+            this.flagShowProducerListEmpty = (data.length === 0);
+          }
+        }
+      );
+    }
   }
 }
