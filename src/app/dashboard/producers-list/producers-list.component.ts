@@ -53,7 +53,11 @@ export class ProducersListComponent implements OnInit {
    * @param photoUrl
    */
   getProducerPicture(photoUrl: string) {
-    return "";
+    if (photoUrl === null || photoUrl.trim().length === 0) {
+      return "assets/images/avatars/thumb_farming_specialist.jpg";
+    } else {
+      return photoUrl;
+    }
   }
 
   /**
