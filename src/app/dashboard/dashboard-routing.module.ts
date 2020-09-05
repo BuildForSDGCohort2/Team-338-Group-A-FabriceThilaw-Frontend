@@ -4,7 +4,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {DefaultDashboardComponent} from "./default/default-dashboard.component";
 import {AuthGuard} from "../shared/guard/auth.guard";
 import {UserResolver} from "../shared/resolvers/user.resolver";
-import {FarmingAdvisorsComponent} from "./farming-advisors/farming-advisors.component";
+import {FarmingAdvisorsListComponent} from "./farming-advisors-list/farming-advisors-list.component";
 
 const routes: Routes = [
 
@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: "advisors",
-    component: FarmingAdvisorsComponent,
+    component: FarmingAdvisorsListComponent,
     resolve: {data: UserResolver},
     canActivate: [AuthGuard]
   }

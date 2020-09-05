@@ -5,10 +5,10 @@ import {ApiService} from "../../shared/services/api.service";
 
 @Component({
   selector: "app-farming-advisors",
-  templateUrl: "./farming-advisors.component.html",
-  styleUrls: ["./farming-advisors.component.css"]
+  templateUrl: "./farming-advisors-list.component.html",
+  styleUrls: ["./farming-advisors-list.component.css"]
 })
-export class FarmingAdvisorsComponent implements OnInit {
+export class FarmingAdvisorsListComponent implements OnInit {
   view = "cardView";
 
   formGroup: FormGroup;
