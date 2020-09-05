@@ -65,7 +65,7 @@ export class ProducersListComponent implements OnInit {
    * @param producer
    */
   getCurrentFarmerAdvisor(producer: Farmer): string {
-    if (producer.advisorId != null) {
+    if (producer.advisorId !== null) {
       return producer.advisorFullName ? producer.advisorFullName : "Not set";
     }
     return "Not set";
@@ -77,7 +77,7 @@ export class ProducersListComponent implements OnInit {
    */
   getCultivableAreaForProducer(producer: Farmer): number {
     const areaMap = Array.from(producer.areaPerCrop.values());
-    if (areaMap != null) {
+    if (areaMap !== null) {
       return areaMap.reduce((a, b) => a + b, 0);
     }
     return 0;
@@ -89,7 +89,7 @@ export class ProducersListComponent implements OnInit {
    */
   getNumberOfActivePlots(producer: Farmer): number {
     const areaMap = producer.areaPerCrop;
-    if (areaMap != null) {
+    if (areaMap !== null) {
       return 0;
     }
     return 0;
