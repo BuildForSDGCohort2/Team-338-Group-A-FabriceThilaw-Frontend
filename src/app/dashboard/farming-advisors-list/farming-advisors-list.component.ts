@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {AppUser, FarmingAdvisor} from "../../shared/interfaces/user.type";
 import {ApiService} from "../../shared/services/api.service";
 
@@ -11,7 +11,6 @@ import {ApiService} from "../../shared/services/api.service";
 export class FarmingAdvisorsListComponent implements OnInit {
   view = "cardView";
 
-  formGroup: FormGroup;
   allFarmingAdvisor: FarmingAdvisor[] = [];
 
   // flags
@@ -24,7 +23,6 @@ export class FarmingAdvisorsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initForm();
     const currentUser = this.apiService.currentUserValue;
     this.getAllAdvisors(currentUser);
   }
@@ -37,27 +35,6 @@ export class FarmingAdvisorsListComponent implements OnInit {
     // raise the flag
     this.flagShowNewAdvisorForm = false;
     this.flagShowAdvisorList = true;
-  }
-
-  /**
-   *
-   */
-  initForm() {
-    this.formGroup = this.formBuilder.group({
-      // identity
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
-      photoUrl: [null, [Validators.required]],
-      // contact
-      personalEmail: [null, [Validators.required]],
-      telephone1: [null, [Validators.required]],
-      telephone2: [null, [Validators.required]],
-      // address
-      addressLine: [null, [Validators.required]],
-      stateOrProvince: [null, [Validators.required]],
-      city: [null, [Validators.required]],
-      county: [null, [Validators.required]],
-    });
   }
 
   /**
