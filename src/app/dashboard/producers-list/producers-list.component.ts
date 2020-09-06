@@ -10,7 +10,7 @@ import {NzMessageService} from "ng-zorro-antd";
 })
 export class ProducersListComponent implements OnInit {
 
-  producerListViewMode = "cardView";
+  producerListViewMode = "listView";
 
   allProducers: Farmer[] = [];
 
@@ -45,6 +45,7 @@ export class ProducersListComponent implements OnInit {
    *
    */
   onAddNewProducer() {
+    this.producerListViewMode = "addProducer";
     this.flagShowNewProducerForm = true;
   }
 
@@ -76,9 +77,11 @@ export class ProducersListComponent implements OnInit {
    * @param producer
    */
   getCultivableAreaForProducer(producer: Farmer): number {
-    const areaMap = Array.from(producer.areaPerCrop.values());
-    if (areaMap !== null) {
-      return areaMap.reduce((a, b) => a + b, 0);
+    if (producer.areaPerCrop != null) {
+      const areaMap = Array.from(producer.areaPerCrop.values());
+      if (areaMap !== null) {
+        return areaMap.reduce((a, b) => a + b, 0);
+      }
     }
     return 0;
   }
@@ -88,9 +91,11 @@ export class ProducersListComponent implements OnInit {
    * @param producer
    */
   getNumberOfActivePlots(producer: Farmer): number {
-    const areaMap = producer.areaPerCrop;
-    if (areaMap !== null) {
-      return 0;
+    if (producer.areaPerCrop) {
+      const areaMap = producer.areaPerCrop;
+      if (areaMap !== null) {
+        return 0;
+      }
     }
     return 0;
   }

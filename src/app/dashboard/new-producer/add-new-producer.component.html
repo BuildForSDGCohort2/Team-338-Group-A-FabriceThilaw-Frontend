@@ -1,1 +1,112 @@
-<p>add-new-producer works!</p>
+<nz-card>
+  <div>
+    <nz-page-header-title class="m-v-20">Register a farmer</nz-page-header-title>
+
+    <form (submit)="checkUserInput()" [formGroup]="formGroup" nz-form nzLayout="vertical">
+      <!--Identity fields-->
+      <nz-form-item>
+        <h5>Identity info</h5>
+        <div [nzGutter]="16" nz-row>
+          <div [nzSpan]="12" nz-col>
+            <nz-form-control>
+              <nz-form-label nzFor="firstName">First name</nz-form-label>
+              <input formControlName="firstName" nz-input placeholder="Please input farmer's first name"
+                     type="text">
+              <nz-form-explain *ngIf="formGroup.get('firstName').dirty && formGroup.get('firstName').errors">Please
+                input
+                this field!
+              </nz-form-explain>
+            </nz-form-control>
+          </div>
+          <div [nzSpan]="12" nz-col>
+            <nz-form-control>
+              <nz-form-label nzFor="lastName">Last name</nz-form-label>
+              <input formControlName="lastName" nz-input placeholder="Please input farmer's last name"
+                     type="text">
+              <nz-form-explain *ngIf="formGroup.get('lastName').dirty && formGroup.get('lastName').errors">Please input
+                this field!
+              </nz-form-explain>
+            </nz-form-control>
+          </div>
+        </div>
+      </nz-form-item>
+
+      <!--Contact fields-->
+      <nz-form-item>
+
+        <div class="m-t-15" nz-row nzGutter="16">
+          <div [nzSpan]="12" nz-col>
+            <nz-form-control>
+              <nz-form-label nzFor="telephone1">Telephone 1</nz-form-label>
+              <input formControlName="telephone1" nz-input placeholder="Please input farmer's main phone number"
+                     type="tel">
+              <nz-form-explain *ngIf="formGroup.get('telephone1').dirty && formGroup.get('telephone1').errors">Please
+                input this field!
+              </nz-form-explain>
+            </nz-form-control>
+          </div>
+          <div [nzSpan]="12" nz-col>
+            <nz-form-control>
+              <nz-form-label nzFor="telephone2">Telephone 2</nz-form-label>
+              <input formControlName="telephone2" nz-input placeholder="Please input farmer's second phone number"
+                     type="tel">
+              <nz-form-explain *ngIf="formGroup.get('telephone2').dirty && formGroup.get('telephone2').errors">Please
+                input this field!
+              </nz-form-explain>
+            </nz-form-control>
+          </div>
+        </div>
+      </nz-form-item>
+
+      <!-- Address fields-->
+      <nz-form-item>
+        <h5>Address info</h5>
+        <div class="m-t-15" nz-row nzGutter="16">
+          <div [nzSpan]="12" nz-col>
+            <nz-form-control>
+              <nz-form-label nzFor="state">State</nz-form-label>
+              <input formControlName="state" nz-input placeholder="Please input farmer's state"
+                     type="text">
+              <nz-form-explain *ngIf="formGroup.get('state').dirty && formGroup.get('state').errors">Please input this
+                field!
+              </nz-form-explain>
+            </nz-form-control>
+          </div>
+          <div [nzSpan]="12" nz-col>
+            <nz-form-control>
+              <nz-form-label nzFor="city">City</nz-form-label>
+              <input formControlName="city" nz-input placeholder="Please input farmer's city"
+                     type="text">
+              <nz-form-explain *ngIf="formGroup.get('city').dirty && formGroup.get('city').errors">Please
+                input this field!
+              </nz-form-explain>
+            </nz-form-control>
+          </div>
+          <div [nzSpan]="12" nz-col>
+            <nz-form-control>
+              <nz-form-label nzFor="county">Village</nz-form-label>
+              <input formControlName="county" nz-input placeholder="Please input farmer's village"
+                     type="text">
+              <nz-form-explain *ngIf="formGroup.get('county').dirty && formGroup.get('county').errors">Please
+                input this field!
+              </nz-form-explain>
+            </nz-form-control>
+          </div>
+        </div>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <div class="text-right">
+            <button [disabled]="formGroup.invalid"
+                    [nzLoading]="flagShowLoadingButton"
+                    class="login-form-button"
+                    nz-button nzType="primary">
+              Save
+            </button>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+</nz-card>

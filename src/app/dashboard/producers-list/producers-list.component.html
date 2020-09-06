@@ -16,12 +16,6 @@
                  nzTitle="Add new producer" nzValue="newProducer">
             <i class="font-size-16" nz-icon nzType="plus" theme="outline"></i>
           </label>
-          <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="List View" nzValue="listView">
-            <i class="font-size-16" nz-icon nzType="ordered-list" theme="outline"></i>
-          </label>
-          <label nz-radio-button nz-tooltip nzPlacement="bottom" nzTitle="Card View" nzValue="cardView">
-            <i class="font-size-16" nz-icon nzType="appstore" theme="outline"></i>
-          </label>
         </nz-radio-group>
       </div>
     </div>
@@ -108,7 +102,8 @@
             <div class="media align-items-center">
               <nz-avatar [nzSrc]="getProducerPicture(item.photoUrl)" nzIcon="star"></nz-avatar>
               <div class="media-body m-l-15">
-                <h6 class="mb-0">{{item.fullName}}</h6>
+                <h6 class="mb-0">{{item.userFullName}}</h6>
+
               </div>
             </div>
           </td>
