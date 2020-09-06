@@ -54,6 +54,27 @@ export class ApiService {
     return bulkWriter.commit();
   }
 
+
+  /**
+   * Registers a new farmer
+   * @param newUser - the user object to register
+   * @param farmerRoleObject
+   */
+  sendSaveRequestForNewFarmerData(newUser: AppUser, farmerRoleObject: Farmer): Promise<void> {
+    // Going to perform multiple writes as a single atomic operation.
+    const bulkWriter = this.db.firestore.batch();
+    // Set the value of the new AppUser
+    const userRef = this.db.firestore.collection(ApiService.WebServiceUsersNode).doc(newUser.id);
+    bulkWriter.set(userRef, {...newUser});
+
+    // Set the value of the farming advisor role object
+    const farmerRef = this.db.firestore.collection(ApiService.WebServiceFarmersNode).doc(farmerRoleObject.id);
+    bulkWriter.set(farmerRef, {...farmerRoleObject});
+
+    // Commit the bulk
+    return bulkWriter.commit();
+  }
+
   /**
    * Make a request to get the app user that matches to the current firebase.User
    * @param authCredentials

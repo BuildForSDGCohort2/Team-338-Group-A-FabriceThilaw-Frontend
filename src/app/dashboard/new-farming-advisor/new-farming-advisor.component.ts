@@ -62,7 +62,9 @@ export class NewFarmingAdvisorComponent implements OnInit {
     const newId = this.apiService.randomUUID;
     const creator: AppUser = this.apiService.currentUserValue;
     const photoUrl = ""; // todo make function to get picture url
-    const newUser: AppUser = FormDataWrapper.generateUserObject(formData, newId, creator.id, photoUrl);
+    const newUser: AppUser = FormDataWrapper.generateUserObject(
+      formData, newId, creator.id, photoUrl,
+      AppUserRoles.ROLE_AGRICULTURAL_ADVISOR);
     this.logcat.consoleLog("Build user", JSON.stringify(newUser));
     // create a new advisor object
     const newAdvisor: FarmingAdvisor = this.getNewFarmingAdvisor(newUser);
