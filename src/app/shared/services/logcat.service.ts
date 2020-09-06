@@ -14,7 +14,6 @@ export class LogcatService {
    * @param body
    */
   public consoleLog(title: string, body: string) {
-
     // console.log(title + ":");
     // console.log(body);
   }
